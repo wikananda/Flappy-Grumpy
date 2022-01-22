@@ -2,18 +2,25 @@ using UnityEngine;
 
 public class Grumpy : MonoBehaviour
 {
-    Rigidbody2D rigid;
     [SerializeField] float jumpForce = 0f;
-    [SerializeField] ScoreManager scoreManager;
-    string state;
-    [SerializeField] GameManager gameManager;
     [SerializeField] GameObject pipeSpawnerPrefab;
+    [SerializeField] AudioClip scoreSFX;
+    [SerializeField] AudioClip gameOverSFX;
+    AudioSource audioSource;
+
+    Rigidbody2D rigid;
+    ScoreManager scoreManager;
+    GameManager gameManager;
     GameObject pipeSpawner;
+    string state;
 
     private void Start()
     {
+        scoreManager = GameObject.Find("GameManager").GetComponent<ScoreManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         rigid = gameObject.GetComponent<Rigidbody2D>();
         state = gameManager.getState();
+        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
     }
 
     void Update()
@@ -43,10 +50,16 @@ public class Grumpy : MonoBehaviour
                 }
                 break;
             case "GameOver":
+                if (transform.position.y < -5)
+                {
+                    Destroy(gameObject);
+                }
                 break;
         }
 
     }
+
+
 
     void PlayerControl()
     {
@@ -67,29 +80,33 @@ public class Grumpy : MonoBehaviour
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), turnSpeed * Time.deltaTime);
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Scoring")
-        {
-            Debug.Log("Scoring");
-            scoreManager.ScoreUp();
-        }
-        if (other.tag == "Obstacle")
-        {
-            KillGrumpy();
-            Debug.Log("Hit Obstacle");
-        }
-        if (other.tag == "Finish")
-        {
-            Destroy(gameObject);
-        }
-    }
-
     void KillGrumpy()
     {
         gameManager.changeState(2);
         Destroy(pipeSpawner);
+        audioSource.PlayOneShot(gameOverSFX);
+        GetComponent<BoxCollider2D>().enabled = false;
+    }
+
+
+
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Obstacle")
+        {
+            KillGrumpy();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Scoring")
+        {
+            scoreManager.ScoreUp();
+            audioSource.PlayOneShot(scoreSFX);
+        }
     }
 
 }

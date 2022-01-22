@@ -4,7 +4,11 @@ public class Pipes : MonoBehaviour
 {
     [SerializeField] float pipeSpeed = 1f;
     [SerializeField] GameManager gameManager;
+
+
     float leftEdge;
+
+
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -20,6 +24,10 @@ public class Pipes : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+        else if (gameManager.getState() == "GameStart")
+        {
+            Destroy(gameObject);
         }
     }
 }

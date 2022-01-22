@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class TextureScrolling : MonoBehaviour
 {
-    Material material;
-    Vector2 offset;
-    float startTime;
-    float tempBgSpeed;
     [SerializeField] float backgroundSpeed;
     [SerializeField] GameManager gameManager;
+
+    Material material;
+    Vector2 offset;
+
+    float startTime;
+    float tempBgSpeed;
     string state;
+
+
     void Start()
     {
         material = GetComponent<Renderer>().material;

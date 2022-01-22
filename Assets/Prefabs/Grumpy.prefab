@@ -165,6 +165,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 23
-  scoreManager: {fileID: 0}
-  gameManager: {fileID: 0}
   pipeSpawnerPrefab: {fileID: 5371341147595153081, guid: 92fac945b3478f94388a139463933ad8, type: 3}
+  scoreSFX: {fileID: 8300000, guid: 180f15adee6f8084381a863d8af3ab6c, type: 3}
+  gameOverSFX: {fileID: 8300000, guid: fde03c1499eaeca4fa42958d46a3431a, type: 3}

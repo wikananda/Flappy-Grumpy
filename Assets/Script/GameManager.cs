@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject grumpyPrefab;
+    [SerializeField] ScoreManager scoreManager;
+
     public enum State
     {
         GameStart,
@@ -9,13 +12,17 @@ public class GameManager : MonoBehaviour
         GameOver
     }
     public State state;
+
     GameObject scorePanel, startPanel, gameOverPanel;
-    [SerializeField] ScoreManager scoreManager;
+
+    bool isInstantiated = false;
+
+
     void Start()
     {
         state = State.GameStart;
         scorePanel = GameObject.Find("Score");
-        startPanel = GameObject.Find("StartPanel");
+        startPanel = GameObject.Find("StartScreen");
         gameOverPanel = GameObject.Find("EndPanel");
         scorePanel.SetActive(false);
         startPanel.SetActive(true);
@@ -27,9 +34,22 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case State.GameStart:
+                if (!isInstantiated)
+                {
+                    GameObject grumpy = Instantiate(grumpyPrefab, new Vector3(-5, 0, -1), Quaternion.identity);
+                    isInstantiated = true;
+                }
+
                 scorePanel.SetActive(false);
                 startPanel.SetActive(true);
                 gameOverPanel.SetActive(false);
+
+                scoreManager.ResetScore();
+
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Application.Quit();
+                }
                 break;
             case State.Playing:
                 scorePanel.SetActive(true);
@@ -43,9 +63,12 @@ public class GameManager : MonoBehaviour
 
                 scoreManager.SetHighScore();
                 scoreManager.SetFinalScore();
+                isInstantiated = false;
                 break;
         }
     }
+
+
 
     public string getState()
     {
@@ -66,6 +89,10 @@ public class GameManager : MonoBehaviour
         {
             this.state = State.GameOver;
         }
+    }
+    public void BackToMainMenu()
+    {
+        state = State.GameStart;
     }
 }
 
