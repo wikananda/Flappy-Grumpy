@@ -6,12 +6,14 @@ public class Grumpy : MonoBehaviour
     [SerializeField] GameObject pipeSpawnerPrefab;
     [SerializeField] AudioClip scoreSFX;
     [SerializeField] AudioClip gameOverSFX;
-    AudioSource audioSource;
 
     Rigidbody2D rigid;
+    GameObject pipeSpawner;
+
+    AudioSource audioSource;
     ScoreManager scoreManager;
     GameManager gameManager;
-    GameObject pipeSpawner;
+
     string state;
 
     private void Start()
@@ -50,7 +52,7 @@ public class Grumpy : MonoBehaviour
                 }
                 break;
             case "GameOver":
-                if (transform.position.y < -5)
+                if (transform.position.y < -9)
                 {
                     Destroy(gameObject);
                 }
@@ -82,6 +84,7 @@ public class Grumpy : MonoBehaviour
     }
     void KillGrumpy()
     {
+        Flap();
         gameManager.changeState(2);
         Destroy(pipeSpawner);
         audioSource.PlayOneShot(gameOverSFX);
