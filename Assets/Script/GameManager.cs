@@ -14,8 +14,7 @@ public class GameManager : MonoBehaviour
     public State state;
 
     GameObject scorePanel, startPanel, gameOverPanel;
-
-    bool isInstantiated = false;
+    GameObject grumpy;
 
 
     void Start()
@@ -34,10 +33,9 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case State.GameStart:
-                if (!isInstantiated)
+                if (grumpy == null)
                 {
-                    GameObject grumpy = Instantiate(grumpyPrefab, new Vector3(-5, 0, -1), Quaternion.identity);
-                    isInstantiated = true;
+                    grumpy = Instantiate(grumpyPrefab, new Vector3(-5, 0, -1), Quaternion.identity);
                 }
 
                 scorePanel.SetActive(false);
@@ -63,7 +61,6 @@ public class GameManager : MonoBehaviour
 
                 scoreManager.SetHighScore();
                 scoreManager.SetFinalScore();
-                isInstantiated = false;
                 break;
         }
     }
@@ -93,6 +90,7 @@ public class GameManager : MonoBehaviour
     public void BackToMainMenu()
     {
         state = State.GameStart;
+        Destroy(grumpy);
     }
 }
 
