@@ -109,6 +109,7 @@ public class Grumpy : MonoBehaviour
         {
             scoreManager.ScoreUp();
             audioSource.PlayOneShot(scoreSFX);
+            Destroy(other.gameObject);
         }
     }
 

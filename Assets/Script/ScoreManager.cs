@@ -19,8 +19,8 @@ public class ScoreManager : MonoBehaviour
     {
         score = 0;
         textScore.text = score.ToString();
-        highScore.text = $"High score : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
-        highScoreEnd.text = $"High score : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
+        highScore.text = $"Highscore : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
+        highScoreEnd.text = $"Highscore : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
     }
 
 
@@ -36,8 +36,8 @@ public class ScoreManager : MonoBehaviour
         if (score > PlayerPrefs.GetInt("HighScore", 0))
         {
             PlayerPrefs.SetInt("HighScore", score);
-            highScore.text = $"High score : {score}";
-            highScoreEnd.text = $"High score : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
+            highScore.text = $"Highscore : {score}";
+            highScoreEnd.text = $"Highscore : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
         }
     }
 
@@ -55,6 +55,7 @@ public class ScoreManager : MonoBehaviour
     public void ResetHighScore()
     {
         PlayerPrefs.SetInt("HighScore", 0);
-        highScore.text = $"High score : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
+        highScore.text = $"Highscore : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
+        highScoreEnd.text = $"Highscore : {PlayerPrefs.GetInt("HighScore", 0).ToString()}";
     }
 }

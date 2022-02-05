@@ -92,5 +92,10 @@ public class GameManager : MonoBehaviour
         state = State.GameStart;
         Destroy(grumpy);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
 
